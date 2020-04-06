@@ -105,7 +105,7 @@ You can list all the avaliable tasks with the following command.
 ```
 tkn task list
 ```
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$tkn%20task%20list. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$tkn%20task%20list "Opens a new terminal and sends the command above"){.didact})
 
 You shoule see three tasks listed:
 
@@ -121,7 +121,7 @@ Everything is now ready to be executed and the last thing missing is a trigger. 
 ```
 tkn pipeline list
 ```
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$tkn%20pipeline%20list. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$tkn%20pipeline%20list "Opens a new terminal and sends the command above"){.didact})
 
 You will see a pipeline listed below
 
@@ -132,7 +132,7 @@ Starts the execution of the pipeline and its progress can be monitored on the Op
 ```
 tkn pipeline start camel-k-pipeline
 ```
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$tkn%20pipeline%20start%20camel-k-pipeline. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$tkn%20pipeline%20start%20camel-k-pipeline "Opens a new terminal and sends the command above"){.didact})
 
 The result of the pipeline execution is integration named hello and basic running on the cluster.
 
