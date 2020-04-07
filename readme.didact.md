@@ -65,13 +65,13 @@ You need to connect to an OpenShift cluster in order to run the examples.
 
 Go to your working project `userX-new` where you'll run the Pipeline.
 
-To create the project, open a terminal tab and type the following command:
+Go to your working project, open a terminal tab and type the following command:
 
 
 ```
-oc project userX-new
+oc project userX-lab-6
 ```
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$oc%20project%20userX-new&completion=New%20project%20creation. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$oc%20project%20userX-lab-6&completion=Use%20your%20namespace. "Opens a new terminal and sends the command above"){.didact})
 
 
 **OpenShift Pipelines Operator** should have installed. 
@@ -87,7 +87,8 @@ oc apply -f camel-k-pipeline-permissions.yaml
 
 ## 2. Creating the Pipeline Definition
 
-This creates a series of resources, including a pipeline definition that you can immediately see on the OpenShift developer console.
+This creates a series of resources, including a pipeline definition that you can immediately see on the OpenShift developer console. 
+Take a look at what's in the definition. ([open](didact://?commandId=vscode.openFolder&projectFilePath=../camel-k-example-tekton/camel-k-pipeline-permissions.yaml&completion=Opened%20the%20camel-k-pipeline-permissions.yaml%20file "Opens the InvoiceService.groovy file"){.didact}).
 
 ```
 oc apply -f camel-k-pipeline-task-definition.yaml
