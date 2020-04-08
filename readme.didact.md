@@ -63,15 +63,13 @@ You need to connect to an OpenShift cluster in order to run the examples.
 
 ## 1. Preparing a new OpenShift project
 
-Go to your working project `userX-new` where you'll run the Pipeline.
-
 Go to your working project, open a terminal tab and type the following command:
 
 
 ```
-oc project userX-lab-6
+oc project userX-lab-tekton
 ```
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$oc%20project%20userX-lab-6&completion=Use%20your%20namespace. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$oc%20project%20userX-lab-tekton&completion=Use%20your%20namespace. "Opens a new terminal and sends the command above"){.didact})
 
 
 **OpenShift Pipelines Operator** should have installed. 
