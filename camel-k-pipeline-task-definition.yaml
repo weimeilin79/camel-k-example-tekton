@@ -57,7 +57,7 @@ spec:
         description: The integration file to run
   steps:
     - name: run-integration
-      image: apache/camel-k:1.0.0-RC2
+      image: apache/camel-k:1.3.2
       workingDir: /workspace/repository
       command:
         - kamel
@@ -69,7 +69,7 @@ spec:
 apiVersion: tekton.dev/v1alpha1
 kind: Task
 metadata:
-  name: camel-k-run-quarkus
+  name: camel-k-deploy-integration
 spec:
   inputs:
     resources:
@@ -77,18 +77,42 @@ spec:
         type: git
     params:
       - name: file
-        description: Run Quarkus integration 
+        description: The integration file to run
+      - name: namespace
+        description: namespace to deploy camel k
   steps:
-    - name: run-quarkus
-      image: apache/camel-k:1.0.0-RC2
+    - name: run-integration
+      image: apache/camel-k:1.3.2
       workingDir: /workspace/repository
       command:
         - kamel
       args:
         - "run"
+        - "--wait"
         - "$(inputs.params.file)"
-        - "-t"
-        - "quarkus.enabled=true"
+        - "-n testpipeline-staging"
+---
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: camel-k-run-test
+spec:
+  inputs:
+    resources:
+      - name: repository
+        type: git
+    params:
+      - name: file
+        description: Test Camel Integration
+  steps:
+    - name: run-yaks
+      image: yaks/yaks:0.4.0-202103310025
+      workingDir: /workspace/repository
+      command:
+        - yaks
+      args:
+        - "test"
+        - "$(inputs.params.file)"
 ---
 apiVersion: tekton.dev/v1alpha1
 kind: Pipeline
@@ -99,11 +123,7 @@ spec:
     - name: source-repo
       type: git
   tasks:
-    - name: install-operator
-      taskRef:
-        name: camel-k-install-operator
     - name: run-integration
-      runAfter: [install-operator]
       taskRef:
         name: camel-k-run-integration
       resources:
@@ -113,14 +133,37 @@ spec:
       params:
         - name: file
           value: "src/hello.groovy"
-    - name: run-quarkus
+    - name: run-a-test
       runAfter: [run-integration]
       taskRef:
-        name: camel-k-run-quarkus
+        name: camel-k-run-test
       resources:
         inputs:
           - name: repository
             resource: source-repo
       params:
         - name: file
-          value: "src/Basic.java"
+          value: "test/hello.feature"
+    - name: run-b-test
+      runAfter: [run-integration]
+      taskRef:
+        name: camel-k-run-test
+      resources:
+        inputs:
+          - name: repository
+            resource: source-repo
+      params:
+        - name: file
+          value: "test/hello.feature"
+
+    - name: deploy-integration
+      runAfter: [run-a-test,run-b-test]
+      taskRef:
+        name: camel-k-run-integration
+      resources:
+        inputs:
+          - name: repository
+            resource: source-repo
+      params:
+        - name: file
+          value: "src/hello.groovy"
