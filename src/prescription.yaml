@@ -1,0 +1,124 @@
+---
+openapi: 3.0.2
+info:
+  title: prescription
+  version: 1.0.0
+  description: Hay fever Prescription
+paths:
+  /prescription:
+    get:
+      parameters:
+      - name: profileid
+        description: Appointment Profile Id
+        schema:
+          type: string
+        in: query
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+              examples:
+                profile:
+                  value:
+                    profileid: 123456
+                    patient: Me
+                    complaint: Cold Symptoms
+                    diagnosis: Acute Bronchitis
+                    prescription:
+                    - medicine: benzonatate
+                      dosage: 3 times per day
+                    - medicine: ProAir HFA
+                      dosage: every 4 to 6 hours
+                    pharmancy: CVS
+          description: Appointment Detail with medication
+      deprecated: false
+      operationId: getProfile
+      summary: Query for medical appointment detail
+      description: Get prescription detail for an appointment
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Profile'
+            examples:
+              profile:
+                value:
+                  profileid: 123456
+                  patient: Me
+                  complaint: Cold Symptoms
+                  diagnosis: Acute Bronchitis
+                  prescription:
+                  - medicine: benzonatate
+                    dosage: 3 times per day
+                  - medicine: ProAir HFA
+                    dosage: every 4 to 6 hours
+                  pharmancy: CVS
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateResult'
+          description: Profile record created
+      deprecated: false
+      operationId: putProfile
+      summary: Provide medical appointment detail
+      description: Create medical appointment detail for patients
+components:
+  schemas:
+    Profile:
+      title: Root Type for Profile
+      description: ""
+      type: object
+      properties:
+        profileid:
+          format: int32
+          description: Appointment ID
+          type: integer
+        patient:
+          description: Patient Name
+          type: string
+        complaint:
+          description: Appointment Complaint
+          type: string
+        diagnosis:
+          description: Appointment Diagnosis
+          type: string
+        prescription:
+          description: Medicine prescription
+          type: array
+          items:
+            type: object
+            properties:
+              medicine:
+                type: string
+              dosage:
+                type: string
+        pharmancy:
+          description: Pharmancy Name
+          type: string
+      example:
+        profileid: 123456
+        patient: Me
+        complaint: Cold Symptoms
+        diagnosis: Acute Bronchitis
+        prescription:
+        - medicine: benzonatate
+          dosage: 3 times per day
+        - medicine: ProAir HFA
+          dosage: every 4 to 6 hours
+        pharmancy: CVS
+    CreateResult:
+      title: Root Type for CreateResult
+      description: ""
+      type: object
+      properties:
+        status:
+          type: string
+      example:
+        status: DONE!
