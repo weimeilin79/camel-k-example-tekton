@@ -1,8 +1,9 @@
 Feature: integration runs
 
   Background:
-    Given URL: http://testsvc-prescription/
-
+    Given load variables namespace.properties
+    Given URL: http://test-prescription.${namespace}.svc.cluster.local
+    
   Scenario: Given integration prescription is running
     Given print 'Then integration hello should print Hello Camel K from Tekton pipelines'
 
